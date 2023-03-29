@@ -80,7 +80,7 @@ app.post("/post", (req, res) => {
 app.put('/put/:_id', (req, res) => {
   const id = parseInt(req.params._id)
   const index = datas.findIndex(element => element._id === id);
-  const personName = datas.find(el => el.name === req.body.name);
+  const personName = datas.findIndex(el => el.name === req.body.name);
   const cukupUmur = parseInt(req.body.age) < 17
   const checkData = req.body.age === undefined || req.body.eyeColor === undefined || req.body.name === undefined
 
@@ -89,7 +89,7 @@ app.put('/put/:_id', (req, res) => {
       status: 'failed',
       message: `person dengan id ${id} tersebut invalid/gak ada`
     })
-  } else if (personName) {
+  } else if (personName !== -1 && personName !== index) {
     res.status(400).json({
       status: 'failed',
       message: `name ${req.body.name} already exist`
